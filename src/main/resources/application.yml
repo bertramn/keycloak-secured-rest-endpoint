@@ -1,0 +1,33 @@
+server:
+  port: 8989
+
+logging:
+  level:
+    org.apache: DEBUG
+
+cxf:
+  path: /v1
+  jaxrs:
+    component-scan: true
+    classes-scan-packages: org.apache.cxf.jaxrs.swagger
+
+# Keycloak Security Configuration
+keycloak:
+  realm: demo
+  authServerUrl: 'http://localhost:8080/auth'
+  realmKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAttxJhOm0ZwvMa+ifihJRoqKLJid0rIXJt3gqSbBbyZ4eEJoR1iCUozcjjcJB0IuFUI4QDals2wwrq62VP1VcNGbXJt9JUyECtlm3qVkNwX7QyWvTLeolJZq8pswVRS5Y37oz00CW0ynYMEgesmgTO7p/w/R9vU+hqdGLGrjXc/fqFeiu9H75yduLRcGLB8p3Zu+7Bnhctm4FCkXjy7dlJzNZhMDVZitW8ZU1lA9pbsw8lfmUiY+kRqccOmegW3Q7Px8HyTzdbHasrMTZdB5PLJHHX/3Hz6l6ViUyjjZ9VmMETHZxIFnxxTEhmhS+9nNZtFClKrHzBnRcKDPizXle0QIDAQAB'
+  sslRequired: external
+  resource: test-client
+  bearerOnly: true
+#  publicClient: true
+  principalAttribute: 'preferred_username'
+#  useResourceRoleMappings: true
+  exposeToken: true
+  securityConstraints:
+    - authRoles: [ '*' ]
+      securityCollections:
+        - name: authed
+          description: Secured resources are kept here
+          patterns: [ '/v1/secured' ]
+#  policyEnforcerConfig:
+#    enforcementMode: ENFORCING
